@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//Здесь явно слишком много лишних юзингов
 
 namespace WpfApp3
 {
@@ -24,20 +25,18 @@ namespace WpfApp3
         {
             InitializeComponent();
         }
-
         
         private void Button_Click_Count(object sender, RoutedEventArgs e)
         {
            
-            string leg = textBoxLegLength.Text.Trim();
-            int Num;
-            bool isNum = int.TryParse(leg, out Num);
-            if (isNum)
+            string legAsString = textBoxLegLength.Text.Trim(); 
+            // А зачем вообще Num? Я оставил чтобы показать что можно обойтись без инициализации выше,
+            //как у тебя было. Весь TryParse вообще можно в if запихать
+            bool isNum = int.TryParse(leg, out int Num); 
+            if (isNum) 
             {
-                int leg2 = int.Parse(leg);
-                double leg3 = Math.Round(leg2 * 0.662 - 1);
-                string result = leg3.ToString();
-                resultText.Text = result;
+                double leg = Math.Round(int.Parse(legAsString) * 0.662 - 1);
+                resultText.Text = leg.ToString();
                 textBoxLegLength.Background = Brushes.White;
             }
             else 
@@ -46,11 +45,5 @@ namespace WpfApp3
                 textBoxLegLength.Background = Brushes.Red;
             }
         }
-        
-
-        /*private void Button_Click_Count(object sender, RoutedEventArgs e)
-        {
-            resultText.Text = Math.Round(int.Parse(textBoxLegLength.Text) * 0.662 - 1).ToString();
-        }*/
     }
 }
